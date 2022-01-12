@@ -1,6 +1,5 @@
 import cv2
 
-print("Hello")
 cam = cv2.VideoCapture(4)
 
 cv2.namedWindow("test")
