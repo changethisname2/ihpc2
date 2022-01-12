@@ -26,7 +26,7 @@ while True:
     if not ret:
         print("failed to grab frame")
         break
-    cv2.imshow("test", frame)
+    cv2.imshow("ludo_board", frame)
 # robot move to pos_board(code in urx)
 img_name = "opencv_frame_0.png"
 cv2.imwrite(img_name, frame)
