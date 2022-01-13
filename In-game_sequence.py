@@ -43,8 +43,8 @@ while True:
             print("{} written!".format(img_name))
             break
             
-    # Detecting the dice number
-    """ #Setup SimpleBlobDetector parameters.
+    """Detecting the dice"""
+    # Setup SimpleBlobDetector parameters.
     params = cv2.SimpleBlobDetector_Params()
 
     # Change thresholds
@@ -53,15 +53,15 @@ while True:
 
     # Filter by Area.
     params.filterByArea = True
-    params.minArea = 30
-    params.maxArea = 800
+    params.minArea = 50
+    params.maxArea = 400
 
     # Filter by Circularity
     params.filterByCircularity = True
-    params.minCircularity = 0.7
+    params.minCircularity = 0.8
     params.maxCircularity = 1
 
-    # Filter by Color
+    #Filter by Color
     params.filterByColor = False
 
     # Filter by Convexity
@@ -72,14 +72,26 @@ while True:
 
     # Create a detector with the parameters
     ver = (cv2.__version__).split('.')
-    if int(ver[0]) < 3:
+    if int(ver[0]) < 3 :
         detector = cv2.SimpleBlobDetector(params)
-    else:
+    else :
         detector = cv2.SimpleBlobDetector_create(params)
 
-    img_dice = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
-    keypoints = detector.detect(img_dice)
-    print(len(keypoints))"""
+    image = cv2.imread("dice_number.png")
+    img_gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+
+    # Detect blobs.
+    keypoints = detector.detect(img_gray)
+
+    # Draw detected blobs as red circles.
+    # cv2.DRAW_MATCHES_FLAGS_DRAW_RICH_KEYPOINTS ensures the size of the circle corresponds to the size of blob
+    im_with_keypoints = cv2.drawKeypoints(img_gray, keypoints, np.array([]), (0,0,255), cv2.DRAW_MATCHES_FLAGS_DRAW_RICH_KEYPOINTS)
+
+    # Show keypoints
+    cv2.imshow("Keypoints", im_with_keypoints)
+
+    print(len(keypoints))
+    cv2.waitKey(0)
 
     #Move the robot to pos_board
     """pose_board = (x',y',z',rx',ry',rz')
@@ -135,8 +147,8 @@ while True:
         mYcv = pixelY * 0.000264583333
         mXcv = float("{:.4f}".format(mXcv))
         mYcv = float("{:.4f}".format(mYcv))
-        mXurx = 0.8828 - mYcv
-        mYurx = 0.0450 - mXcv
+        mXurx = 0.71140 - mYcv
+        mYurx = 0.58306 - mXcv
         markerTup[0] = mXurx
         markerTup[1] = mYurx
         markerCenter_urx = []
