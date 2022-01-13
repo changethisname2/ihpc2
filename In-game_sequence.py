@@ -13,15 +13,19 @@ import argparse
 import imutils
 import sys
 import numpy as np
+from urx.robotiq_two_finger_gripper import Robotiq_Two_Finger_Gripper
+
+
+
 while True:
     keyboard.wait("space")
     #Make robot move to dice(pos_roll)
     """pos_dice_drop = [0.707, 0.219, 0.030, -2.205, 2.205, -0.043]
         pos_dice_grab = [0.719, 0.219, -0.200, -2.205, 2.205, -0.043]
         rob.movel(pos_dice_grab, 0.5, 0.3)
-        #close claw
+        gripper.close_gripper()
         rob.movel(pos_dice_drop, 0.5, 0.3)
-        #open claw"""
+        gripper.open_gripper()"""
 
     # Roll the dice
 
