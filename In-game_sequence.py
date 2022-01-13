@@ -13,7 +13,7 @@ import argparse
 import imutils
 import sys
 import numpy as np
-from urx.robotiq_two_finger_gripper import Robotiq_Two_Finger_Gripper
+#from urx.robotiq_two_finger_gripper import Robotiq_Two_Finger_Gripper
 
 
 
@@ -27,17 +27,22 @@ while True:
         gripper.open_gripper()"""
     
     cam = cv2.VideoCapture(4)
-    cv2.namedWindow("dice")
-    ret, frame = cam.read()
-    if not ret:
-        print("failed to grab frame")
-        break
-    cv2.imshow("dice", frame)
-    img_dice = "dice_number.png"
-    cv2.imwrite(img_dice, frame)
-    print("{} written!".format(img_dice))
-    cam.release()
-    image = cv2.imread("dice_number.png")
+    #rob.movel(pos_dice_pic, 0.5, 0.3)
+    while True:
+        ret, frame = cam.read()
+        if not ret:
+            print("failed to grab frame")
+            break
+        cv2.imshow("test", frame)
+
+        k = cv2.waitKey(1)
+        if k%256 == 32:
+            # SPACE pressed
+            img_name = "dice_number.png"
+            cv2.imwrite(img_name, frame)
+            print("{} written!".format(img_name))
+            break
+            
     # Detecting the dice number
     """ #Setup SimpleBlobDetector parameters.
     params = cv2.SimpleBlobDetector_Params()
