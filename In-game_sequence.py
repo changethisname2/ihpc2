@@ -16,8 +16,12 @@ import numpy as np
 while True:
     keyboard.wait("space")
     #Make robot move to dice(pos_roll)
-    """pose_dice = (x,y,z,rx,ry,rz)
-    rob.movel[pose_dice,0.2,0.3]"""
+    """pos_dice_drop = [0.707, 0.219, 0.030, -2.205, 2.205, -0.043]
+        pos_dice_grab = [0.719, 0.219, -0.200, -2.205, 2.205, -0.043]
+        rob.movel(pos_dice_grab, 0.5, 0.3)
+        #close claw
+        rob.movel(pos_dice_drop, 0.5, 0.3)
+        #open claw"""
 
     # Roll the dice
 
