@@ -33,14 +33,15 @@ if __name__ == "__main__":
         pos_dice_drop = [0.707, 0.219, 0.030, -2.205, 2.205, -0.043]
         pos_dice_grab = [0.719, 0.219, -0.200, -2.205, 2.205, -0.043]
         pos_dice_pic = [0.653, 0.187, -0.163, -2.189, 2.191, -0.011]
-        rob.movel(pos_dice_drop, 0.5, 0.3)
-        rob.movel(pos_dice_grab, 0.5, 0.3)
+	a, v = 0.5, 0.3
+        rob.movel(pos_dice_drop, a, v)
+        rob.movel(pos_dice_grab, a, v)
         gripper.close_gripper()
-        rob.movel(pos_dice_drop, 0.5, 0.3)
+        rob.movel(pos_dice_drop, a, v)
         gripper.open_gripper()
 
         cam = cv2.VideoCapture(4)
-        rob.movel(pos_dice_pic, 0.5, 0.3)
+        rob.movel(pos_dice_pic, a, v)
         while True:
             ret, frame = cam.read()
             if not ret:
