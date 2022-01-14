@@ -98,7 +98,6 @@ if __name__ == "__main__":
         image = cv2.imread("dice_number.png")
         img_gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
 
-
         ''' h,w = img_gray.shape
         ratio = int(h) / int(w)
 
@@ -108,14 +107,11 @@ if __name__ == "__main__":
         up_points = (up_width, up_height)
         resized_up = cv2.resize(img_gray, up_points, interpolation=cv2.INTER_LINEAR)
         cv2.waitKey(0)
-
-
+	
         h,w,c = image.shape '''
-
 
         # Detect blobs.
         keypoints = detector.detect(img_gray)
-
 
         # Draw detected blobs as red circles.
         # cv2.DRAW_MATCHES_FLAGS_DRAW_RICH_KEYPOINTS ensures the size of the circle corresponds to the size of blob
