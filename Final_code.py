@@ -1,4 +1,4 @@
-#import keyboard
+"""import keyboard"""
 import cv2
 import urx
 from IPython import embed
@@ -13,6 +13,7 @@ from urx.robotiq_two_finger_gripper import Robotiq_Two_Finger_Gripper
 
 if __name__ == "__main__":
     try:
+	"""Connecting to Robot"""
         print("Connecting to Robot...")
         logging.basicConfig(level=logging.WARN)
         while True:
@@ -30,6 +31,8 @@ if __name__ == "__main__":
 	                rob.close()
                 except:
 	                pass
+	
+	"""Rolling dice"""
         pos_dice_drop = [0.707, 0.219, 0.030, -2.205, 2.205, -0.043]
         pos_dice_grab = [0.719, 0.219, -0.200, -2.205, 2.205, -0.043]
         pos_dice_pic = [0.653, 0.187, -0.163, -2.189, 2.191, -0.011]
@@ -40,7 +43,8 @@ if __name__ == "__main__":
         rob.movel(pos_dice_drop, a, v)
         gripper.open_gripper()
 
-        cam = cv2.VideoCapture(4)
+        """Taking picture of dice"""
+	cam = cv2.VideoCapture(4)
         rob.movel(pos_dice_pic, a, v)
         while True:
             ret, frame = cam.read()
@@ -59,30 +63,30 @@ if __name__ == "__main__":
 
         """Detecting the dice"""
         # Setup SimpleBlobDetector parameters.
-        params = cv2.SimpleBlobDetector_Params()
+        dice_params = cv2.SimpleBlobDetector_Params()
 
         # Change thresholds
-        params.minThreshold = 50;
-        params.maxThreshold = 15000;
+        dice_params.minThreshold = 50;
+        dice_params.maxThreshold = 15000;
 
         # Filter by Area.
-        params.filterByArea = True
-        params.minArea = 50
-        params.maxArea = 400
+        dice_params.filterByArea = True
+        dice_params.minArea = 50
+        dice_params.maxArea = 400
 
         # Filter by Circularity
-        params.filterByCircularity = True
-        params.minCircularity = 0.8
-        params.maxCircularity = 1
+        dice_params.filterByCircularity = True
+        dice_params.minCircularity = 0.8
+        dice_params.maxCircularity = 1
 
-        #Filter by Color
-        params.filterByColor = False
+        # Filter by Color
+        dice_params.filterByColor = False
 
         # Filter by Convexity
-        params.filterByConvexity = False
+        dice_params.filterByConvexity = False
 
         # Filter by Inertia
-        params.filterByInertia = False
+        dice_params.filterByInertia = False
 
         # Create a detector with the parameters
         ver = (cv2.__version__).split('.')
