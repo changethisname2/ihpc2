@@ -13,7 +13,7 @@ from urx.robotiq_two_finger_gripper import Robotiq_Two_Finger_Gripper
 
 if __name__ == "__main__":
     try:
-	"""Connecting to Robot"""
+        """Connecting to Robot"""
         print("Connecting to Robot...")
         logging.basicConfig(level=logging.WARN)
         while True:
@@ -31,12 +31,14 @@ if __name__ == "__main__":
 	                rob.close()
                 except:
 	                pass
-	
-	"""Rolling dice"""
+
+        """Rolling dice"""
+        pos_boardj = [0.137, -1.985, -1.438, -1.176, 1.563, 0.166]
         pos_dice_drop = [0.707, 0.219, 0.030, -2.205, 2.205, -0.043]
         pos_dice_grab = [0.719, 0.219, -0.200, -2.205, 2.205, -0.043]
         pos_dice_pic = [0.653, 0.187, -0.163, -2.189, 2.191, -0.011]
-	a, v = 0.5, 0.3
+        a, v = 0.5, 0.3
+        rob.movej(pos_boardj, a, v)
         rob.movel(pos_dice_drop, a, v)
         rob.movel(pos_dice_grab, a, v)
         gripper.close_gripper()
@@ -44,7 +46,7 @@ if __name__ == "__main__":
         gripper.open_gripper()
 
         """Taking picture of dice"""
-	cam = cv2.VideoCapture(4)
+        cam = cv2.VideoCapture(4)
         rob.movel(pos_dice_pic, a, v)
         while True:
             ret, frame = cam.read()
@@ -91,24 +93,13 @@ if __name__ == "__main__":
         # Create a detector with the parameters
         ver = (cv2.__version__).split('.')
         if int(ver[0]) < 3 :
-            detector = cv2.SimpleBlobDetector(params)
+            detector = cv2.SimpleBlobDetector(dice_params)
         else :
-            detector = cv2.SimpleBlobDetector_create(params)
+            detector = cv2.SimpleBlobDetector_create(dice_params)
 
         image = cv2.imread("dice_number.png")
-        img_gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+        img_gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY) 
 
-        ''' h,w = img_gray.shape
-        ratio = int(h) / int(w)
-
-        # let's upscale the image using new  width and height
-        up_width = 600
-        up_height = int(up_width * ratio)
-        up_points = (up_width, up_height)
-        resized_up = cv2.resize(img_gray, up_points, interpolation=cv2.INTER_LINEAR)
-        cv2.waitKey(0)
-	
-        h,w,c = image.shape '''
 
         # Detect blobs.
         keypoints = detector.detect(img_gray)
@@ -119,7 +110,7 @@ if __name__ == "__main__":
 
         # Show keypoints
         cv2.imshow("Keypoints", im_with_keypoints)
-	dice_num = len(keypoints)
+        dice_num = len(keypoints)
         print(dice_num)
         cv2.waitKey(0)
 
@@ -128,20 +119,5 @@ if __name__ == "__main__":
     finally:
         rob.close()
       
-       #point4 = point3[:]
 
-       #point4[2] += -0.08
-
-       #rob.movel(point4, 0.4, 0.3)
-
-'''
-#a good position right above the board       
-Transform:
-<Orientation: 
-array([[-0.09616118, -0.99501282,  0.02650485],
-       [-0.99265482,  0.09390132, -0.07628206],
-       [ 0.07341278, -0.03364554, -0.99673394]])>
-<Vector: (0.58576, 0.35213, -0.07606)>
-
-'''
 cv2.destroyAllWindows()
