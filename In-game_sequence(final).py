@@ -119,8 +119,8 @@ if __name__ == "__main__":
 
         # Show keypoints
         cv2.imshow("Keypoints", im_with_keypoints)
-
-        print(len(keypoints))
+	dice_num = len(keypoints)
+        print(dice_num)
         cv2.waitKey(0)
 
     except:
