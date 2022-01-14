@@ -131,3 +131,14 @@ steps = {
     56 : coordinate [19]
 }
 
+pos_dice_drop = [0.707, 0.219, 0.030, -2.205, 2.205, -0.043]
+pos_dice_grab = [0.719, 0.219, -0.200, -2.205, 2.205, -0.043]
+pos_board = [0.726, -0.078, 0.085, -2.125, 2.190, -0.108]
+
+
+startingPts = []
+startingPts.append(coordinate[59])
+startingPts.append(coordinate[60])
+startingPts.append(coordinate[56])
+startingPts.append(coordinate[70])
+
