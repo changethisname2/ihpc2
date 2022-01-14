@@ -1,8 +1,14 @@
+import keyboard
 import cv2
+import urx
+from IPython import embed
+import logging
+import traceback
 import argparse
 import imutils
 import sys
 import numpy as np
+from urx.robotiq_two_finger_gripper import Robotiq_Two_Finger_Gripper
 
 image = cv2.imread("board.png")
 
