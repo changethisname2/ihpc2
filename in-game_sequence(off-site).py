@@ -1,33 +1,38 @@
-"""Press space to initiate the robot
-Make the robot move to the container, shake container(pos_roll), take photo (pos_dice) and detect number on dice
-Robot move to pos_board, take photo detect its own pieces
-Write conditional statement, if odd and all pieces start, break. Else, move. If decide between moving piece out of start or continue moving another piece, do 50/50, write algorithm later, after moving piece, it will sleep
-everytime it is its turn, make robot take photo of ludo board"""
 import keyboard
 import cv2
 import urx
-#from IPython import embed
+# from IPython import embed
 import logging
 import traceback
 import argparse
 import imutils
 import sys
 import numpy as np
-#from urx.robotiq_two_finger_gripper import Robotiq_Two_Finger_Gripper
+# from urx.robotiq_two_finger_gripper import Robotiq_Two_Finger_Gripper
 
+'''
+def grab_piece(x, y):
+    rob.movel(x, y, above_piece, rx, ry, rz)
+    rob.movel(x, y, at_piece, rx, ry, rz)
+    gripper.close_gripper()
+    rob.movel(x, y, above_piece, rx, ry, rz)
 
+def place_piece(x, y):
+    rob.movel(x, y, above_step, rx, ry, rz)
+    rob.movel(x, y, at_step, rx, ry, rz)
+    gripper.open_gripper()
+    rob.movel(x, y, above_step, rx, ry, rz)
+'''
 
 while True:
     keyboard.wait("space")
-    """pos_dice_drop = [0.707, 0.219, 0.030, -2.205, 2.205, -0.043]
-        pos_dice_grab = [0.719, 0.219, -0.200, -2.205, 2.205, -0.043]
-        rob.movel(pos_dice_grab, 0.5, 0.3)
+    """rob.movel(pos_dice_grab, 0.5, 0.3)
         gripper.close_gripper()
         rob.movel(pos_dice_drop, 0.5, 0.3)
         gripper.open_gripper()"""
-    
+
     cam = cv2.VideoCapture(4)
-    #rob.movel(pos_dice_pic, 0.5, 0.3)
+    # rob.movel(pos_dice_pic, 0.5, 0.3)
     while True:
         ret, frame = cam.read()
         if not ret:
@@ -36,13 +41,13 @@ while True:
         cv2.imshow("test", frame)
 
         k = cv2.waitKey(1)
-        if k%256 == 32:
+        if k % 256 == 32:
             # SPACE pressed
             img_name = "dice_number.png"
             cv2.imwrite(img_name, frame)
             print("{} written!".format(img_name))
             break
-            
+
     """Detecting the dice"""
     # Setup SimpleBlobDetector parameters.
     params = cv2.SimpleBlobDetector_Params()
@@ -61,7 +66,7 @@ while True:
     params.minCircularity = 0.8
     params.maxCircularity = 1
 
-    #Filter by Color
+    # Filter by Color
     params.filterByColor = False
 
     # Filter by Convexity
@@ -72,9 +77,9 @@ while True:
 
     # Create a detector with the parameters
     ver = (cv2.__version__).split('.')
-    if int(ver[0]) < 3 :
+    if int(ver[0]) < 3:
         detector = cv2.SimpleBlobDetector(params)
-    else :
+    else:
         detector = cv2.SimpleBlobDetector_create(params)
 
     image = cv2.imread("dice_number.png")
@@ -85,7 +90,8 @@ while True:
 
     # Draw detected blobs as red circles.
     # cv2.DRAW_MATCHES_FLAGS_DRAW_RICH_KEYPOINTS ensures the size of the circle corresponds to the size of blob
-    im_with_keypoints = cv2.drawKeypoints(img_gray, keypoints, np.array([]), (0,0,255), cv2.DRAW_MATCHES_FLAGS_DRAW_RICH_KEYPOINTS)
+    im_with_keypoints = cv2.drawKeypoints(img_gray, keypoints, np.array([]), (0, 0, 255),
+                                          cv2.DRAW_MATCHES_FLAGS_DRAW_RICH_KEYPOINTS)
 
     # Show keypoints
     cv2.imshow("Keypoints", im_with_keypoints)
@@ -93,53 +99,51 @@ while True:
     print(len(keypoints))
     cv2.waitKey(0)
 
-    #Move the robot to pos_board
-    """pose_board = (x',y',z',rx',ry',rz')
-    rob.movel[pose_board,0.2,0.3]"""
+    # Move the robot to pos_board
+    #rob.movel[pos_board,0.3,0.3]
 
-    #Make the robot to take the picture of chess board
+    # Make the robot to take the picture of chess board
     cam = cv2.VideoCapture(4)
     cv2.namedWindow("board")
-    ret, frame = cam.read()
-    if not ret:
-        print("failed to grab frame")
-        break
-    cv2.imshow("board", frame)
-    img_board = "board.png"
-    cv2.imwrite(img_board, frame)
-    print("{} written!".format(img_board))
-    cam.release()
+    while True:
+        ret, frame = cam.read()
+        if not ret:
+            print("failed to grab frame")
+            break
+        cv2.imshow("test", frame)
+
+        k = cv2.waitKey(1)
+        if k % 256 == 32:
+            # SPACE pressed
+            img_name = "board.png"
+            cv2.imwrite(img_name, frame)
+            print("{} written!".format(img_name))
+            break
     image1 = cv2.imread("board.png")
 
-    #Detect chess pieces
+    # Detect chess pieces
     """aruco_dict = cv2.aruco.Dictionary_get(cv2.aruco.DICT_4X4_50)
     parameters = cv2.aruco.DetectorParameters_create()
     corners, ids, rejectedImgPoints = cv2.aruco.detectMarkers(resized_down,aruco_dict,parameters=parameters)
-
     out = cv2.aruco.drawDetectedMarkers(image1, corners, ids)
-
-
-
+    
     markerCentres = []
-
-    count = 0
+    markerCenter_urx = []
 
     for marker in corners:
         centreX = (marker[0][0][0] + marker[0][2][0]) / 2
         centreY = (marker[0][0][1] + marker[0][2][1]) / 2
-        markerList = []
-        markerList.append(centreX)
-        markerList.append(centreY)
-        markerList.append(ids([count]))
-        markerCentres.append(markerList)
-        count += 1
+        markerCoord = []
+        markerCoord.append(centreX)
+        markerCoord.append(centreY)
+        markerCentres.append(markerCoord)
 
     print(markerCentres)
 
     cv2.imshow("out",out)
     cv2.waitKey(0)"""
 
-    #Grab_the_pieces
+    # Grab_the_pieces
     """for markerTup in markerCenters:
         pixelX = int(markerTup[0])
         pixelY = int(markerTup[1])
@@ -151,18 +155,30 @@ while True:
         mYurx = 0.58306 - mXcv
         markerTup[0] = mXurx
         markerTup[1] = mYurx
-        markerCenter_urx = []
         markerCenter_urx.append(markerTup)"""
 
     # To detect whether the dice number is odd or even
-    """if len(keypoints) % 2 == 1:
-         if all pieces at start:
-             break
-         else:
-             move the furthest piece(improve later)
+    """
+    numAtStart = 0
+    for markerCenter in markerCenter_urx:
+        for start in startingPts:
+            if markerCenter[0] == start[0] and markerCenter[1] == start[1]:
+                numAtStart += 1
+    
+    if dice_number % 2 == 1:
+        if numAtStart == 4:
+            break
+        else:
+            for step in steps:
+                if markerCenter_urx[0][0] == steps[step][0] and markerCenter_urx[0][1] == steps[step][1]:
+                    next_step_num = step + dice_number
+                    for nextStep in steps:
+                        if next_step_num == nextStep:
+                            grab_piece(markerCenter_urx[0][0], markerCenter_urx[0][1])
+                            place_piece(steps[nextStep][0], steps[nextSTep][1])
     else:
-        if all pieces at start:
-            move the first one
+        if numAtStart == 4:
+            next_step_num(e)
         else:
             rng between (0, 1)
             if rng == 0:
