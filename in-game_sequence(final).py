@@ -26,7 +26,6 @@ def place_piece(x, y):
 
 if __name__ == "__main__":
     try:
-        """Connecting to Robot"""
         print("Connecting to Robot...")
         logging.basicConfig(level=logging.WARN)
         while True:
