@@ -21,7 +21,7 @@ if __name__ == "__main__":
 			rob.close()
                 except:
 	                pass
-	#insert code here??
+	#insert code here
     except:
         traceback.print_exc()
     finally:
