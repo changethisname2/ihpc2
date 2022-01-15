@@ -10,18 +10,19 @@ import sys
 import numpy as np
 from urx.robotiq_two_finger_gripper import Robotiq_Two_Finger_Gripper
 
+a, v = 0.5, 0.3
 def grab_piece(x, y):
     above_piece, rx', ry', rz' =-0.1502, -2.1890, 2.1920,=-0.0111
     at_piece, rx, ry, rz = -0.2025, -2.1890,2.1910,-0.0110
-    rob.movel([x, y, above_piece, rx', ry', rz'],a,v)
-    rob.movel([x, y, at_piece, rx, ry, rz],a,v)
+    rob.movel([x, y, above_piece, rx', ry', rz'], a, v)
+    rob.movel([x, y, at_piece, rx, ry, rz], a, v)
     gripper.close_gripper()
-    rob.movel([x, y, above_piece, rx, ry, rz],a,v)
+    rob.movel([x, y, above_piece, rx, ry, rz], a, v)
 def place_piece(x, y):
-    rob.movel([x, y, above_piece, rx', ry', rz'],a,v)
+    rob.movel([x, y, above_piece, rx', ry', rz'], a, v)
     rob.movel([x, y, at_piece, rx, ry, rz],a,v)
     gripper.open_gripper()
-    rob.movel([x, y, above_piece, rx', ry', rz'],a,v)
+    rob.movel([x, y, above_piece, rx', ry', rz'], a, v)
 
 if __name__ == "__main__":
     try:
@@ -49,7 +50,6 @@ if __name__ == "__main__":
         pos_dice_drop = [0.707, 0.219, 0.030, -2.205, 2.205, -0.043]
         pos_dice_grab = [0.719, 0.219, -0.200, -2.205, 2.205, -0.043]
         pos_dice_pic = [0.653, 0.187, -0.163, -2.189, 2.191, -0.011]
-        a, v = 0.5, 0.3
         rob.movej(pos_boardj, a, v)
         rob.movel(pos_dice_drop, a, v)
         rob.movel(pos_dice_grab, a, v)
@@ -80,8 +80,8 @@ if __name__ == "__main__":
         dice_params = cv2.SimpleBlobDetector_Params()
 
         # Change thresholds
-        dice_params.minThreshold = 50;
-        dice_params.maxThreshold = 15000;
+        dice_params.minThreshold = 50
+        dice_params.maxThreshold = 15000
 
         # Filter by Area.
         dice_params.filterByArea = True
@@ -112,8 +112,7 @@ if __name__ == "__main__":
         image = cv2.imread("dice_number.png")
         img_gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY) 
 
-
-        # Detect blobs.
+        # Detect blobs
         keypoints = detector.detect(img_gray)
 
         # Draw detected blobs as red circles.
@@ -216,9 +215,6 @@ if __name__ == "__main__":
                 if next_step_num_e == nextStep:
                     grab_piece(markerCenter_urx[2][0],markerCenter[2][1])
                     place_piece(steps[nextStep][0],steps[nextStep][1])
-            
-
-                
                 
             else:
                 move the furthest piece(improve later)"""
