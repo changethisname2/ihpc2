@@ -18,10 +18,9 @@ if __name__ == "__main__":
                 break
             except:
                 try:
-	                rob.close()
+			rob.close()
                 except:
 	                pass
-        embed()
 	#insert code here??
     except:
         traceback.print_exc()
