@@ -23,7 +23,24 @@ def place_piece(x, y):
     rob.movel([x, y, at_piece, rx, ry, rz],a,v)
     gripper.open_gripper()
     rob.movel([x, y, above_piece, rxb, ryb, rzb], a, v)
-
+def move_piece(markerCenter_urx,steps,dice_num):
+    for step in steps:
+        if markerCenter_urx[0][0] == steps[step][0] and markerCenter_urx[0][1] == steps[step][1]: 
+            marker_pos = step
+    diff = (57 - marker_pos)
+    if diff < 6:
+        if diff < dice_num:
+            key = 57 - (dice_num - diff)
+            grab_piece(markerCenter_urx[0][0], markerCenter_urx[0][1])
+            place_piece(steps[key][0], steps[key][1])
+    else:
+        for step in steps:
+            if markerCenter_urx[0][0] == steps[step][0] and markerCenter_urx[0][1] == step[step][1]:
+                next_step_num = step + dice_num
+                for nextStep in steps:
+                    if next_step_num == nextStep:
+                        grab_piece(markerCenter_urx[0][0], markerCenter_urx[0][1])
+                        place_piece(steps[nextStep][0], steps[nextStep][1])
 if __name__ == "__main__":
     try:
         print("Connecting to Robot...")
@@ -157,8 +174,7 @@ if __name__ == "__main__":
         markerTup[1] = mYurx
         markerCenter_urx.append(markerTup)"""
 
-    # To detect whether the dice number is odd or even
-    """
+   # To detect whether the dice number is odd or even
     numAtStart = 0
     for markerCenter in markerCenter_urx:
         for start in startingPts:
@@ -166,57 +182,33 @@ if __name__ == "__main__":
                 numAtStart += 1
 
     if dice_number % 2 == 1:
-        if numAtStart == 4:
+        if len(markerCenter_urx) - numAtStart == 0:
             break
         else:
-            for step in steps:
-                if markerCenter_urx[0][0] == steps[step][0] and markerCenter_urx[0][1] == steps[step][1]:
-                    next_step_num_o = step + dice_num
-                    for nextStep in steps:
-                        if next_step_num_o == nextStep:
-                            grab_piece(markerCenter_urx[0][0], markerCenter_urx[0][1])
-                            place_piece(steps[nextStep][0], steps[nextSTep][1])
+            move_piece(markerCenter_urx,steps,dice_num)
+
     else:
-        if numAtStart == 4:
+        if len(markerCenter_urx) - numAtStart == 0:
             next_step_num_e == dice_num
             for nextStep in steps:
                 if next_step_num_e == nextStep:
                     grab_piece(markerCenter_urx[0][0],markerCenter[0][1])
                     place_piece(steps[nextStep][0],steps[nextStep][1])
-        elif numAtStart == 3:
-            rng between (0, 1)
-            if rng == 0:
-               next_step_num_e == dice_num
-               for nextStep in steps:
-                   if next_step_num_e == nextStep:
-                      grab_piece(markerCenter_urx[1][0],markerCenter_urx[1][1])
-                      place_piece(steps[nextStep][0],steps[nextStep][1])
-            else:
-               for step in steps:
-                   if markerCenter_urx[0][0] == steps[step][0] and markerCenter_urx[0][1] == step[step][1]:
-                    next_step_num_e = step + dice_num
+        elif len(markerCenter_urx) - numAtStart == 1:
+            if len(markerCenter_urx) > 1:
+                decision = random.randint(0, 1)
+                if decision == 0:
+                    next_step_num_e == dice_num
                     for nextStep in steps:
                         if next_step_num_e == nextStep:
-                            grab_piece(markerCenter_urx[0][0], markerCenter_urx[0][1])
-                            place_piece(steps[nextStep][0], steps[nextStep][1])
-        else:
-            if markerCenter_urx[0][0] != end_point[0] and markerCenter_urx[0][1] != end_point[1]:
-               for step in steps:
-                   if markerCenter_urx[0][0] == steps[step][0] and markerCenter_urx[0][1] == step[step][1]:
-                   next_step_num_e = step + dice_num
-                   for nextStep in steps:
-                       if next_step_num_e == nextStep:
-                            grab_piece(markerCenter_urx[0][0], markerCenter_urx[0][1])
-                            place_piece(steps[nextStep][0], steps[nextSTep][1])
+                            grab_piece(markerCenter_urx[1][0],markerCenter_urx[1][1])
+                            place_piece(steps[nextStep][0],steps[nextStep][1])
+                else:
+                    move_piece(markerCenter_urx,steps,dice_num)
             else:
-                next_step_num_e == dice_num
-                for nextStep in steps:
-                if next_step_num_e == nextStep:
-                    grab_piece(markerCenter_urx[2][0],markerCenter[2][1])
-                    place_piece(steps[nextStep][0],steps[nextStep][1])
-                
-            else:
-                move the furthest piece(improve later)"""
+                move_piece(markerCenter_urx, steps, dice_num)
+        elif len(markerCenter_urx) - numAtStart == 2:
+            move_piece(markerCenter_urx,steps,dice_num)
     except:
         traceback.print_exc()
     finally:
