@@ -10,7 +10,13 @@ import sys
 import numpy as np
 from urx.robotiq_two_finger_gripper import Robotiq_Two_Finger_Gripper
 
+'''Definitions'''
 a, v = 0.5, 0.3
+pos_boardj = [0.137, -1.985, -1.438, -1.176, 1.563, 0.166]
+pos_dice_drop = [0.707, 0.219, 0.030, -2.205, 2.205, -0.043]
+pos_dice_grab = [0.719, 0.219, -0.200, -2.205, 2.205, -0.043]
+pos_dice_pic = [0.653, 0.187, -0.163, -2.189, 2.191, -0.011]
+
 def grab_piece(x, y):
     above_piece, rxb, ryb, rzb = -0.1502, -2.1890, 2.1920, -0.0111
     at_piece, rx, ry, rz = -0.2025, -2.1890, 2.1910, -0.0110
@@ -18,12 +24,14 @@ def grab_piece(x, y):
     rob.movel([x, y, at_piece, rx, ry, rz], a, v)
     gripper.close_gripper()
     rob.movel([x, y, above_piece, rx, ry, rz], a, v)
+
 def place_piece(x, y):
     rob.movel([x, y, above_piece, rxb, ryb, rzb], a, v)
     rob.movel([x, y, at_piece, rx, ry, rz],a,v)
     gripper.open_gripper()
     rob.movel([x, y, above_piece, rxb, ryb, rzb], a, v)
-def move_piece(markerCenter_urx,steps,dice_num):
+
+def move_piece(markerCenter_urx, steps, dice_num):
     for step in steps:
         if markerCenter_urx[0][0] == steps[step][0] and markerCenter_urx[0][1] == steps[step][1]: 
             marker_pos = step
@@ -41,6 +49,7 @@ def move_piece(markerCenter_urx,steps,dice_num):
                     if next_step_num == nextStep:
                         grab_piece(markerCenter_urx[0][0], markerCenter_urx[0][1])
                         place_piece(steps[nextStep][0], steps[nextStep][1])
+
 if __name__ == "__main__":
     try:
         print("Connecting to Robot...")
@@ -57,15 +66,11 @@ if __name__ == "__main__":
                 break
             except:
                 try:
-	                rob.close()
+			rob.close()
                 except:
 	                pass
 
         """Rolling dice"""
-        pos_boardj = [0.137, -1.985, -1.438, -1.176, 1.563, 0.166]
-        pos_dice_drop = [0.707, 0.219, 0.030, -2.205, 2.205, -0.043]
-        pos_dice_grab = [0.719, 0.219, -0.200, -2.205, 2.205, -0.043]
-        pos_dice_pic = [0.653, 0.187, -0.163, -2.189, 2.191, -0.011]
         rob.movej(pos_boardj, a, v)
         rob.movel(pos_dice_drop, a, v)
         rob.movel(pos_dice_grab, a, v)
@@ -144,7 +149,7 @@ if __name__ == "__main__":
 	# Detect chess pieces
     """aruco_dict = cv2.aruco.Dictionary_get(cv2.aruco.DICT_4X4_50)
     parameters = cv2.aruco.DetectorParameters_create()
-    corners, ids, rejectedImgPoints = cv2.aruco.detectMarkers(resized_down,aruco_dict,parameters=parameters)
+    corners, ids, rejectedImgPoints = cv2.aruco.detectMarkers(resized_down, aruco_dict, parameters=parameters)
     out = cv2.aruco.drawDetectedMarkers(image1, corners, ids)
 
     markerCentres = []
@@ -160,16 +165,16 @@ if __name__ == "__main__":
     cv2.imshow("out",out)
     cv2.waitKey(0)"""
 
-    # Grab_the_pieces
+    # Grab the pieces
     """for markerTup in markerCenters:
         pixelX = int(markerTup[0])
         pixelY = int(markerTup[1])
-        mXcv = pixelX * 0.000264583333
-        mYcv = pixelY * 0.000264583333
+        mXcv = pixelX * 0.000826086957
+        mYcv = pixelY * 0.000826086957
         mXcv = float("{:.4f}".format(mXcv))
         mYcv = float("{:.4f}".format(mYcv))
-        mXurx = 0.71140 - mYcv
-        mYurx = 0.58306 - mXcv
+        mXurx = 0.89517 - mYcv
+        mYurx = 0.22763 - mXcv
         markerTup[0] = mXurx
         markerTup[1] = mYurx
         markerCenter_urx.append(markerTup)"""
