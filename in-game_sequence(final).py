@@ -190,15 +190,15 @@ if __name__ == "__main__":
         if len(markerCenter_urx) - numAtStart == 0:
             break
         else:
-            move_piece(markerCenter_urx,steps,dice_num)
+            move_piece(markerCenter_urx, steps, dice_num)
 
     else:
         if len(markerCenter_urx) - numAtStart == 0:
             next_step_num_e == dice_num
             for nextStep in steps:
                 if next_step_num_e == nextStep:
-                    grab_piece(markerCenter_urx[0][0],markerCenter[0][1])
-                    place_piece(steps[nextStep][0],steps[nextStep][1])
+                    grab_piece(markerCenter_urx[0][0], markerCenter[0][1])
+                    place_piece(steps[nextStep][0], steps[nextStep][1])
         elif len(markerCenter_urx) - numAtStart == 1:
             if len(markerCenter_urx) > 1:
                 decision = random.randint(0, 1)
@@ -206,14 +206,14 @@ if __name__ == "__main__":
                     next_step_num_e == dice_num
                     for nextStep in steps:
                         if next_step_num_e == nextStep:
-                            grab_piece(markerCenter_urx[1][0],markerCenter_urx[1][1])
-                            place_piece(steps[nextStep][0],steps[nextStep][1])
+                            grab_piece(markerCenter_urx[1][0], markerCenter_urx[1][1])
+                            place_piece(steps[nextStep][0], steps[nextStep][1])
                 else:
-                    move_piece(markerCenter_urx,steps,dice_num)
+                    move_piece(markerCenter_urx, steps, dice_num)
             else:
                 move_piece(markerCenter_urx, steps, dice_num)
         elif len(markerCenter_urx) - numAtStart == 2:
-            move_piece(markerCenter_urx,steps,dice_num)
+            move_piece(markerCenter_urx, steps, dice_num)
     except:
         traceback.print_exc()
     finally:
