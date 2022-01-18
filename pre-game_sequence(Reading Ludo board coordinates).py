@@ -1,4 +1,4 @@
-# import keyboard
+import keyboard
 import cv2
 import urx
 from IPython import embed
@@ -105,8 +105,8 @@ if __name__ == "__main__":
             mYcv = pixelY * 0.00062295
             mXcv = float("{:.4f}".format(mXcv))
             mYcv = float("{:.4f}".format(mYcv))
-            mXurx = 0.89517 - mYcv
-            mYurx = 0.22763 - mXcv
+            mXurx = 0.8880 - mYcv
+            mYurx = 0.1575 - mXcv
             cordTup = (mXurx,mYurx)
             coordinate.append(cordTup)
         endPts = (0.73487,-0.06897)
@@ -195,7 +195,7 @@ if __name__ == "__main__":
                 if next_step_num_e == nextStep:
                     gripper.open_gripper()
                     #grab_piece(startingPts[0][0],startingPts[0][1])
-                    place_piece(steps[11][0],steps[11][1])
+                    place_piece(steps[26][0],steps[26][1])
     except:
         traceback.print_exc()
     finally:
