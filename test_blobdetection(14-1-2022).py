@@ -77,7 +77,7 @@ for keypoint in keypoints:
     mXcv = float("{:.4f}".format(mXcv))
     mYcv = float("{:.4f}".format(mYcv))
     mXurx = 0.8950 - mYcv
-    mYurx = 0.1525 - mXcv
+    mYurx = 0.1575 - mXcv
     cordTup = (pixelX, pixelY)
     cordinate.append(cordTup)
     number += 1
