@@ -1,3 +1,5 @@
+"""For marker detction"""
+# import the necessary packages
 import argparse
 import imutils
 import cv2
@@ -57,12 +59,12 @@ else :
 	detector = cv2.SimpleBlobDetector_create(params)
 
 
-img_gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+# img_gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
 
 
 
 # Detect blobs.
-keypoints = detector.detect(img_gray)
+keypoints = detector.detect(image)
 
 cordinate = []
 
@@ -70,27 +72,33 @@ number = 0
 for keypoint in keypoints:
     pixelX = int(keypoint.pt[0])
     pixelY = int(keypoint.pt[1])
-    mXcv = pixelX * 0.000826086957
-    mYcv = pixelY * 0.000826086957
+    mXcv = pixelX * 0.00062295
+    mYcv = pixelY * 0.00062295
     mXcv = float("{:.4f}".format(mXcv))
     mYcv = float("{:.4f}".format(mYcv))
-    mXurx = 0.89517 - mYcv
-    mYurx = 0.22763 - mXcv
-    cordTup = (mXurx,mYurx)
+    mXurx = 0.8950 - mYcv
+    mYurx = 0.1525 - mXcv
+    cordTup = (pixelX, pixelY)
     cordinate.append(cordTup)
     number += 1
     print (number, cordTup)
 
-imageCircle = img_gray.copy()
-circle_center1 = (405, 194)
+imageCircle = image.copy()
+circle_center1 = (505,345)
+circle_center2 = (513,265)
+circle_center3 = (119,236)
+circle_center4 = (301,176)
 radius = 10
 cv2.circle(imageCircle, circle_center1, radius, (255, 255, 255), 3, cv2.LINE_AA) #white
+cv2.circle(imageCircle, circle_center2, radius, (0, 0, 255), 3, cv2.LINE_AA) #red
+cv2.circle(imageCircle, circle_center3, radius, (255, 0, 0), 3, cv2.LINE_AA) #B
+cv2.circle(imageCircle, circle_center4, radius, (0, 255, 0), 3, cv2.LINE_AA) #G
 cv2.imshow("image Circle", imageCircle)
 cv2.waitKey(0)
 
 # Draw detected blobs as red circles.
 # cv2.DRAW_MATCHES_FLAGS_DRAW_RICH_KEYPOINTS ensures the size of the circle corresponds to the size of blob
-im_with_keypoints = cv2.drawKeypoints(img_gray, keypoints, np.array([]), (0,0,255), cv2.DRAW_MATCHES_FLAGS_DRAW_RICH_KEYPOINTS)
+im_with_keypoints = cv2.drawKeypoints(image, keypoints, np.array([]), (0,0,255), cv2.DRAW_MATCHES_FLAGS_DRAW_RICH_KEYPOINTS)
 
 # Show keypoints
 cv2.imshow("Keypoints", im_with_keypoints)
