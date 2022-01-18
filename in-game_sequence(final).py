@@ -1,4 +1,4 @@
-"""Import keyboard"""
+import keyboard
 import cv2
 import urx
 from IPython import embed
@@ -12,10 +12,11 @@ from urx.robotiq_two_finger_gripper import Robotiq_Two_Finger_Gripper
 
 '''Definitions'''
 a, v = 0.5, 0.3
-pos_boardj = [0.137, -1.985, -1.438, -1.176, 1.563, 0.166]
 pos_dice_drop = [0.707, 0.219, 0.030, -2.205, 2.205, -0.043]
 pos_dice_grab = [0.719, 0.219, -0.200, -2.205, 2.205, -0.043]
-pos_dice_pic = [0.653, 0.187, -0.163, -2.189, 2.191, -0.011]
+pos_dice_pic = [0.653, 0.187, -0.143, -2.189, 2.191, -0.011]
+pos_board = [0.647, -0.078, -0.029, -2.125, 2.190, -0.108]
+pos_boardj = [0.137, -1.985, -1.438, -1.176, 1.563, 0.166]
 
 def grab_piece(x, y):
     above_piece, rxb, ryb, rzb = -0.1502, -2.1890, 2.1920, -0.0111
@@ -26,6 +27,8 @@ def grab_piece(x, y):
     rob.movel([x, y, above_piece, rx, ry, rz], a, v)
 
 def place_piece(x, y):
+    above_piece, rxb, ryb, rzb = -0.1502, -2.1890, 2.1920, -0.0111
+    at_piece, rx, ry, rz = -0.2025, -2.1890, 2.1910, -0.0110
     rob.movel([x, y, above_piece, rxb, ryb, rzb], a, v)
     rob.movel([x, y, at_piece, rx, ry, rz],a,v)
     gripper.open_gripper()
@@ -52,6 +55,7 @@ def move_piece(markerCenter_urx, steps, dice_num):
 
 if __name__ == "__main__":
     try:
+        """Connecting to Robot"""
         print("Connecting to Robot...")
         logging.basicConfig(level=logging.WARN)
         while True:
@@ -66,7 +70,7 @@ if __name__ == "__main__":
                 break
             except:
                 try:
-			rob.close()
+	                rob.close()
                 except:
 	                pass
 
@@ -101,8 +105,8 @@ if __name__ == "__main__":
         dice_params = cv2.SimpleBlobDetector_Params()
 
         # Change thresholds
-        dice_params.minThreshold = 50
-        dice_params.maxThreshold = 15000
+        dice_params.minThreshold = 50;
+        dice_params.maxThreshold = 15000;
 
         # Filter by Area.
         dice_params.filterByArea = True
@@ -133,7 +137,8 @@ if __name__ == "__main__":
         image = cv2.imread("dice_number.png")
         img_gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY) 
 
-        # Detect blobs
+
+        # Detect blobs.
         keypoints = detector.detect(img_gray)
 
         # Draw detected blobs as red circles.
@@ -145,75 +150,75 @@ if __name__ == "__main__":
         dice_num = len(keypoints)
         print(dice_num)
         cv2.waitKey(0)
-	
-	# Detect chess pieces
-    """aruco_dict = cv2.aruco.Dictionary_get(cv2.aruco.DICT_4X4_50)
-    parameters = cv2.aruco.DetectorParameters_create()
-    corners, ids, rejectedImgPoints = cv2.aruco.detectMarkers(resized_down, aruco_dict, parameters=parameters)
-    out = cv2.aruco.drawDetectedMarkers(image1, corners, ids)
 
-    markerCentres = []
-    markerCenter_urx = []
-    for marker in corners:
-        centreX = (marker[0][0][0] + marker[0][2][0]) / 2
-        centreY = (marker[0][0][1] + marker[0][2][1]) / 2
-        markerCoord = []
-        markerCoord.append(centreX)
-        markerCoord.append(centreY)
-        markerCentres.append(markerCoord)
-    print(markerCentres)
-    cv2.imshow("out",out)
-    cv2.waitKey(0)"""
+        # Detect chess pieces
+        """aruco_dict = cv2.aruco.Dictionary_get(cv2.aruco.DICT_4X4_50)
+        parameters = cv2.aruco.DetectorParameters_create()
+        corners, ids, rejectedImgPoints = cv2.aruco.detectMarkers(resized_down, aruco_dict, parameters=parameters)
+        out = cv2.aruco.drawDetectedMarkers(image1, corners, ids)
 
-    # Grab the pieces
-    """for markerTup in markerCenters:
-        pixelX = int(markerTup[0])
-        pixelY = int(markerTup[1])
-        mXcv = pixelX * 0.000826086957
-        mYcv = pixelY * 0.000826086957
-        mXcv = float("{:.4f}".format(mXcv))
-        mYcv = float("{:.4f}".format(mYcv))
-        mXurx = 0.89517 - mYcv
-        mYurx = 0.22763 - mXcv
-        markerTup[0] = mXurx
-        markerTup[1] = mYurx
-        markerCenter_urx.append(markerTup)"""
+        markerCentres = []
+        markerCenter_urx = []
+        for marker in corners:
+            centreX = (marker[0][0][0] + marker[0][2][0]) / 2
+            centreY = (marker[0][0][1] + marker[0][2][1]) / 2
+            markerCoord = []
+            markerCoord.append(centreX)
+            markerCoord.append(centreY)
+            markerCentres.append(markerCoord)
+        print(markerCentres)
+        cv2.imshow("out",out)
+        cv2.waitKey(0)"""
+        # Grab the pieces
+        """for markerTup in markerCenters:
+            pixelX = int(markerTup[0])
+            pixelY = int(markerTup[1])
+            mXcv = pixelX * 0.00062295
+            mYcv = pixelY * 0.00062295
+            mXcv = float("{:.4f}".format(mXcv))
+            mYcv = float("{:.4f}".format(mYcv))
+            mXurx = 0.8880 - mYcv
+            mYurx = 0.1575 - mXcv
+            markerTup[0] = mXurx
+            markerTup[1] = mYurx
+            markerCenter_urx.append(markerTup)"""
 
-   # To detect whether the dice number is odd or even
-    numAtStart = 0
-    for markerCenter in markerCenter_urx:
-        for start in startingPts:
-            if markerCenter[0] == start[0] and markerCenter[1] == start[1]:
-                numAtStart += 1
+       # To detect whether the dice number is odd or even
+        '''numAtStart = 0
+        for markerCenter in markerCenter_urx:
+            for start in startingPts:
+                if markerCenter[0] == start[0] and markerCenter[1] == start[1]:
+                    numAtStart += 1
 
-    if dice_number % 2 == 1:
-        if len(markerCenter_urx) - numAtStart == 0:
-            break
-        else:
-            move_piece(markerCenter_urx, steps, dice_num)
-
-    else:
-        if len(markerCenter_urx) - numAtStart == 0:
-            next_step_num_e == dice_num
-            for nextStep in steps:
-                if next_step_num_e == nextStep:
-                    grab_piece(markerCenter_urx[0][0], markerCenter[0][1])
-                    place_piece(steps[nextStep][0], steps[nextStep][1])
-        elif len(markerCenter_urx) - numAtStart == 1:
-            if len(markerCenter_urx) > 1:
-                decision = random.randint(0, 1)
-                if decision == 0:
-                    next_step_num_e == dice_num
-                    for nextStep in steps:
-                        if next_step_num_e == nextStep:
-                            grab_piece(markerCenter_urx[1][0], markerCenter_urx[1][1])
-                            place_piece(steps[nextStep][0], steps[nextStep][1])
-                else:
-                    move_piece(markerCenter_urx, steps, dice_num)
+        if dice_number % 2 == 1:
+            if len(markerCenter_urx) - numAtStart == 0:
+                break
             else:
                 move_piece(markerCenter_urx, steps, dice_num)
-        elif len(markerCenter_urx) - numAtStart == 2:
-            move_piece(markerCenter_urx, steps, dice_num)
+
+        else:
+            if len(markerCenter_urx) - numAtStart == 0:
+                next_step_num_e == dice_num
+                for nextStep in steps:
+                    if next_step_num_e == nextStep:
+                        grab_piece(markerCenter_urx[0][0], markerCenter[0][1])
+                        place_piece(steps[nextStep][0], steps[nextStep][1])
+            elif len(markerCenter_urx) - numAtStart == 1:
+                if len(markerCenter_urx) > 1:
+                    decision = random.randint(0, 1)
+                    if decision == 0:
+                        next_step_num_e == dice_num
+                        for nextStep in steps:
+                            if next_step_num_e == nextStep:
+                                grab_piece(markerCenter_urx[1][0], markerCenter_urx[1][1])
+                                place_piece(steps[nextStep][0], steps[nextStep][1])
+                    else:
+                        move_piece(markerCenter_urx, steps, dice_num)
+                else:
+                    move_piece(markerCenter_urx, steps, dice_num)
+            elif len(markerCenter_urx) - numAtStart == 2:
+                move_piece(markerCenter_urx, steps, dice_num)'''
+
     except:
         traceback.print_exc()
     finally:
