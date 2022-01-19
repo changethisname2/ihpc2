@@ -84,15 +84,15 @@ for keypoint in keypoints:
     print (number, cordTup)
 
 imageCircle = image.copy()
-circle_center1 = (505,345)
-circle_center2 = (513,265)
-circle_center3 = (119,236)
-circle_center4 = (301,176)
+circle_center1 = (, )
+'''circle_center2 = (, )
+circle_center3 = (, )
+circle_center4 = (, )'''
 radius = 10
-cv2.circle(imageCircle, circle_center1, radius, (255, 255, 255), 3, cv2.LINE_AA) #white
-cv2.circle(imageCircle, circle_center2, radius, (0, 0, 255), 3, cv2.LINE_AA) #red
-cv2.circle(imageCircle, circle_center3, radius, (255, 0, 0), 3, cv2.LINE_AA) #B
-cv2.circle(imageCircle, circle_center4, radius, (0, 255, 0), 3, cv2.LINE_AA) #G
+cv2.circle(imageCircle, circle_center1, radius, (255, 255, 255), 3, cv2.LINE_AA) # white
+'''cv2.circle(imageCircle, circle_center2, radius, (0, 0, 255), 3, cv2.LINE_AA) # red
+cv2.circle(imageCircle, circle_center3, radius, (255, 0, 0), 3, cv2.LINE_AA) # black
+cv2.circle(imageCircle, circle_center4, radius, (0, 255, 0), 3, cv2.LINE_AA) # green'''
 cv2.imshow("image Circle", imageCircle)
 cv2.waitKey(0)
 
