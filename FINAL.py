@@ -353,4 +353,5 @@ if __name__ == "__main__":
     finally:
         rob.close()
 
+cam.release()        
 cv2.destroyAllWindows()
