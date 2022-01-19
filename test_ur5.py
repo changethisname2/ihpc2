@@ -13,6 +13,7 @@ if __name__ == "__main__":
                 rob = urx.Robot("192.168.1.6")
                 rob.set_tcp((0, 0, 0.335, 0, 0, 0))
                 rob.set_payload(0.5, (0, 0, 0))
+		gripper = Robotiq_Two_Finger_Gripper(rob)
                 break
             except KeyboardInterrupt:
                 break
