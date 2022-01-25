@@ -2,6 +2,7 @@ import keyboard
 import cv2
 import urx
 from IPython import embed
+import random
 import logging
 import traceback
 import argparse
@@ -15,8 +16,8 @@ a, v = 0.5, 0.3
 pos_dice_drop = [0.707, 0.219, 0.030, -2.205, 2.205, -0.043]
 pos_dice_grab = [0.719, 0.219, -0.200, -2.205, 2.205, -0.043]
 pos_dice_pic = [0.653, 0.187, -0.143, -2.189, 2.191, -0.011]
-pos_board = [0.685, -0.047, -0.086, -2.106, 2.029, -0.308]
-pos_boardj = [0.234, -2.031, -2.085, -0.312, 1.503, 0.184]
+pos_board = [0.707, -0.053, 0.035, -2.042, 2.027, -0.376]
+pos_boardj = [0.234, -1.847, -1.965, -0.558, 1.478, 0.208]
 
 def grab_piece(x, y):
     above_piece, rxb, ryb, rzb = -0.1502, -2.1890, 2.1920, -0.0111
@@ -36,7 +37,7 @@ def place_piece(x, y):
 
 def move_piece(markerCenter_urx, steps, dice_num):
     for step in steps:
-        if markerCenter_urx[0][0] == steps[step][0] and markerCenter_urx[0][1] == steps[step][1]: 
+        if ((markerCenter_urx[0][0] >= (steps[step][0] - 0.01)) and (markerCenter_urx[0][0] <= (steps[step][0] + 0.01))) and ((markerCenter_urx[0][1] >= (steps[step][1] - 0.01)) and (markerCenter_urx[0][1] <= (steps[step][1] + 0.01))): 
             marker_pos = step
     diff = (57 - marker_pos)
     if diff < 6:
@@ -44,9 +45,17 @@ def move_piece(markerCenter_urx, steps, dice_num):
             key = 57 - (dice_num - diff)
             grab_piece(markerCenter_urx[0][0], markerCenter_urx[0][1])
             place_piece(steps[key][0], steps[key][1])
+        else:
+            for step in steps:
+                if ((markerCenter_urx[0][0] >= (steps[step][0] - 0.01)) and (markerCenter_urx[0][0] <= (steps[step][0] + 0.01))) and ((markerCenter_urx[0][1] >= (steps[step][1] - 0.01)) and (markerCenter_urx[0][1] <= (steps[step][1] + 0.01))):
+                    next_step_num = step + dice_num
+                    for nextStep in steps:
+                        if next_step_num == nextStep:
+                            grab_piece(markerCenter_urx[0][0], markerCenter_urx[0][1])
+                            place_piece(steps[nextStep][0], steps[nextStep][1])
     else:
         for step in steps:
-            if markerCenter_urx[0][0] == steps[step][0] and markerCenter_urx[0][1] == step[step][1]:
+            if ((markerCenter_urx[0][0] >= (steps[step][0] - 0.01)) and (markerCenter_urx[0][0] <= (steps[step][0] + 0.01))) and ((markerCenter_urx[0][1] >= (steps[step][1] - 0.01)) and (markerCenter_urx[0][1] <= (steps[step][1] + 0.01))):
                 next_step_num = step + dice_num
                 for nextStep in steps:
                     if next_step_num == nextStep:
@@ -60,7 +69,7 @@ if __name__ == "__main__":
         while True:
             try:
                 print("...")
-                rob = urx.Robot("192.168.1.6")
+                rob = urx.Robot("192.168.1.5")
                 rob.set_tcp((0, 0, 0.335, 0, 0, 0))
                 rob.set_payload(0.5, (0, 0, 0))
                 gripper = Robotiq_Two_Finger_Gripper(rob)
@@ -73,25 +82,26 @@ if __name__ == "__main__":
                 except:
                     pass
         
+        endPts = (0.73487,-0.06897)
         steps = {
-            1 : (0.7232, -0.1647),
-            2 : (0.7230, -0.1447),
-            3 : (0.7230, -0.1279),
-            4 : (0.7230, -0.1074),
-            5 : (0.7230, -0.0904),
-            6 : (0.7019, -0.0717),
-            7 : (0.6853, -0.0718),
-            8 : (0.6674, -0.0717),
-            9 : (0.6475, -0.0717),
-            10 : (0.6284, -0.0741),
-            11 : (0.6104, -0.0741),
+            1 : (0.72, -0.16),
+            2 : (0.72, -0.145),
+            3 : (0.72, -0.127),
+            4 : (0.72, -0.107),
+            5 : (0.72, -0.09),
+            6 : (0.7019, -0.07),
+            7 : (0.6853, -0.07),
+            8 : (0.6674, -0.07),
+            9 : (0.6475, -0.07),
+            10 : (0.6284, -0.07),
+            11 : (0.6104, -0.07),
             12 : (0.6104, -0.0556),
             13 : (0.6104, -0.0383),
             14 : (0.6271, -0.0370),
             15 : (0.6473, -0.0360),
             16 : (0.6658, -0.0361),
             17 : (0.6845, -0.0360),
-            18 : (0.7025, -0.-350),
+            18 : (0.7025, -0.0350),
             19 : (0.7197, -0.0160),
             20 : (0.7214, 0.0050),
             21 : (0.7196, 0.0239),
@@ -111,7 +121,7 @@ if __name__ == "__main__":
             35 : (0.8341, -0.0308),
             36 : (0.8534, -0.0302),
             37 : (0.8710, -0.0303),
-            38 : (0.8710, -0.0482),
+            38 : (0.8709, -0.0482),
             39 : (0.8709, -0.0669),
             40 : (0.8524, -0.0674),
             41 : (0.8331, -0.0687),
@@ -123,22 +133,22 @@ if __name__ == "__main__":
             47 : (0.7606, -0.1260),
             48 : (0.7607, -0.1439),
             49 : (0.7606, -0.1624),
-            50 : (0.7606,- 0.1818),
+            50 : (0.7606, -0.1818),
             51 : (0.7427, -0.1818),
             52 : (0.7439, -0.1647),
             53 : (0.7442, -0.1458),
             54 : (0.7445, -0.1250),
             55 : (0.7418, -0.1065),
             56 : (0.7420, -0.0891),
-            57 : (0.73487,-0.06897)
+            57 : endPts
         }
     
         #print(steps)
         startingPts = []
-        startingPts.append((0.6792, -0.1566))
-        startingPts.append((0.6763, -0.1195))
-        startingPts.append((0.6420, -0.1213))
-        startingPts.append((0.6410, -0.1196))
+        startingPts.append((0.67, -0.16))
+        startingPts.append((0.67, -0.12))
+        startingPts.append((0.63, -0.16))
+        startingPts.append((0.63, -0.12))
 
         """Rolling dice"""
         rob.movej(pos_boardj, a, v)
@@ -149,7 +159,7 @@ if __name__ == "__main__":
         gripper.open_gripper()
 
         """Taking picture of dice"""
-        cam = cv2.VideoCapture(4)
+        cam = cv2.VideoCapture('/dev/v4l/by-id/usb-Intel_R__RealSense_TM__Depth_Camera_435_Intel_R__RealSense_TM__Depth_Camera_435_935523026947-video-index0')
         rob.movel(pos_dice_pic, a, v)
         while True:
             ret, frame = cam.read()
@@ -220,8 +230,7 @@ if __name__ == "__main__":
         print(dice_num)
         cv2.waitKey(0)
 
-        
-        cam = cv2.VideoCapture(4)
+        cam = cv2.VideoCapture('/dev/v4l/by-id/usb-Intel_R__RealSense_TM__Depth_Camera_435_Intel_R__RealSense_TM__Depth_Camera_435_935523026947-video-index0')
         gripper.open_gripper()
         rob.movel(pos_board, a, v)
         while True:
@@ -250,15 +259,18 @@ if __name__ == "__main__":
         out = cv2.aruco.drawDetectedMarkers(image, corners, ids)
 
         markerCenters = []
+        markerCenter_urxmix = []
         markerCenter_urx = []
+        count = 0
         for marker in corners:
             centerX = (marker[0][0][0] + marker[0][2][0]) / 2
             centerY = (marker[0][0][1] + marker[0][2][1]) / 2
             markerCoord = []
             markerCoord.append(centerX)
             markerCoord.append(centerY)
+            markerCoord.append(ids[count])
+            count += 1
             markerCenters.append(markerCoord)
-        print(markerCenters)
         cv2.imshow("out",out)
         cv2.waitKey(0)
 
@@ -266,25 +278,66 @@ if __name__ == "__main__":
         for markerTup in markerCenters:
             pixelX = int(markerTup[0])
             pixelY = int(markerTup[1])
-            mXcv = pixelX * 0.0008261
-            mYcv = pixelY * 0.0008261
+            mXcv = pixelX * 0.0007308
+            mYcv = pixelY * 0.0007308
             mXcv = float("{:.4f}".format(mXcv))
             mYcv = float("{:.4f}".format(mYcv))
-            mXurx = 0.8906 - mYcv
-            mYurx = 0.2395 - mXcv
+            mXurx = 0.8911 - mYcv
+            mYurx = 0.2214 - mXcv
+            mXurx = float("{:.2f}".format(mXurx))
+            mYurx = float("{:.2f}".format(mYurx))   
             markerTup[0] = mXurx
             markerTup[1] = mYurx
-            markerCenter_urx.append(markerTup)
+            markerCenter_urxmix.append(markerTup)
 
+        count = 0 
+        for turn in range(len(markerCenter_urxmix)):
+            for marker in markerCenter_urxmix:
+                if marker[2][0] == count:
+                    markerCenter_urx.append(marker)
+            count += 1
         print(markerCenter_urx)
 
-        place_piece(markerCenter_urx[0][0], markerCenter_urx[0][1])
+        numAtStart = 0
+        for markerCenter in markerCenter_urx:
+            for start in startingPts:
+                if ((markerCenter[0] >= (start[0] - 0.01)) and (markerCenter[0] <= (start[0] + 0.01))) and ((markerCenter[1] >= (start[1] - 0.01)) and (markerCenter[1] <= (start[1] + 0.01))):
+                    numAtStart += 1
+        print(numAtStart)
 
-        
+        if dice_num % 2 == 1:
+            if len(markerCenter_urx) - numAtStart == 0:
+                pass
+            else:
+                move_piece(markerCenter_urx, steps, dice_num)
+
+        else:
+            if len(markerCenter_urx) - numAtStart == 0:
+                next_step_num_e = dice_num
+                for nextStep in steps:
+                    if next_step_num_e == nextStep:
+                        grab_piece(markerCenter_urx[0][0], markerCenter_urx[0][1])
+                        place_piece(steps[nextStep][0], steps[nextStep][1])
+            elif len(markerCenter_urx) - numAtStart == 1:
+                if len(markerCenter_urx) > 1:
+                    decision = random.randint(0, 1)
+                    print(decision)
+                    if decision == 0:
+                        next_step_num_e = dice_num
+                        for nextStep in steps:
+                            if next_step_num_e == nextStep:
+                                grab_piece(markerCenter_urx[1][0], markerCenter_urx[1][1])
+                                place_piece(steps[nextStep][0], steps[nextStep][1])
+                    else:
+                        move_piece(markerCenter_urx, steps, dice_num)
+                else:
+                    move_piece(markerCenter_urx, steps, dice_num)
+            elif len(markerCenter_urx) - numAtStart == 2:
+                move_piece(markerCenter_urx, steps, dice_num)
+
     except:
         traceback.print_exc()
     finally:
         rob.close()
 
-cam.release()        
 cv2.destroyAllWindows()
