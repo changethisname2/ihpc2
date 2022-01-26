@@ -1,6 +1,6 @@
 import cv2
 
-cam = cv2.VideoCapture(4)
+cam = cv2.VideoCapture('/dev/v4l/by-id/usb-Intel_R__RealSense_TM__Depth_Camera_435_Intel_R__RealSense_TM__Depth_Camera_435_935523026947-video-index0')
 
 cv2.namedWindow("test")
 
