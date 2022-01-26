@@ -65,7 +65,7 @@ else :
 
 # Detect blobs.
 keypoints = detector.detect(image)
-
+"""
 cordinate = []
 
 number = 0
@@ -95,6 +95,7 @@ cv2.circle(imageCircle, circle_center3, radius, (255, 0, 0), 3, cv2.LINE_AA) # b
 cv2.circle(imageCircle, circle_center4, radius, (0, 255, 0), 3, cv2.LINE_AA) # green'''
 cv2.imshow("image Circle", imageCircle)
 cv2.waitKey(0)
+"""
 
 # Draw detected blobs as red circles.
 # cv2.DRAW_MATCHES_FLAGS_DRAW_RICH_KEYPOINTS ensures the size of the circle corresponds to the size of blob
