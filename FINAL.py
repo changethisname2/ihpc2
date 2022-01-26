@@ -81,7 +81,7 @@ if __name__ == "__main__":
                     rob.close()
                 except:
                     pass
-        
+                
         steps = {
             1 : (0.715, -0.16),
             2 : (0.716, -0.145),
@@ -141,8 +141,7 @@ if __name__ == "__main__":
             56 : (0.7362, -0.0885),
             57 : (0.7343, -0.06897)
         }
-    
-        #print(steps)
+   
         startingPts = []
         startingPts.append((0.67, -0.16))
         startingPts.append((0.67, -0.12))
@@ -157,7 +156,6 @@ if __name__ == "__main__":
         rob.movel(pos_dice_drop, a, v)
         gripper.gripper_action(150)
 
-
         """Taking picture of dice"""
         cam = cv2.VideoCapture('/dev/v4l/by-id/usb-Intel_R__RealSense_TM__Depth_Camera_435_Intel_R__RealSense_TM__Depth_Camera_435_935523026947-video-index0')
         rob.movel(pos_dice_pic, a, v)
@@ -166,8 +164,7 @@ if __name__ == "__main__":
             if not ret:
                 print("failed to grab frame")
                 break
-            cv2.imshow("test", frame)
-
+                
             k = cv2.waitKey(1)
             if k%256 == 32:
                 # SPACE pressed
@@ -178,14 +175,13 @@ if __name__ == "__main__":
         cam.release()
         cv2.destroyAllWindows()
 
-
         """Detecting the dice"""
         # Setup SimpleBlobDetector parameters.
         dice_params = cv2.SimpleBlobDetector_Params()
 
         # Change thresholds
-        dice_params.minThreshold = 50;
-        dice_params.maxThreshold = 15000;
+        dice_params.minThreshold = 50
+        dice_params.maxThreshold = 15000
 
         # Filter by Area.
         dice_params.filterByArea = True
@@ -216,7 +212,6 @@ if __name__ == "__main__":
         image = cv2.imread("dice_number.png")
         img_gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY) 
 
-
         # Detect blobs.
         keypoints = detector.detect(img_gray)
 
@@ -225,11 +220,8 @@ if __name__ == "__main__":
         im_with_keypoints = cv2.drawKeypoints(img_gray, keypoints, np.array([]), (0,0,255), cv2.DRAW_MATCHES_FLAGS_DRAW_RICH_KEYPOINTS)
 
         # Show keypoints
-        #cv2.imshow("Keypoints", im_with_keypoints)
         dice_num = len(keypoints)
-        #print(dice_num)
-        #cv2.waitKey(0)
-
+   
         cam = cv2.VideoCapture('/dev/v4l/by-id/usb-Intel_R__RealSense_TM__Depth_Camera_435_Intel_R__RealSense_TM__Depth_Camera_435_935523026947-video-index0')
         gripper.open_gripper()
         rob.movel(pos_board, a, v)
@@ -238,8 +230,7 @@ if __name__ == "__main__":
             if not ret:
                 print("failed to grab frame")
                 break
-            cv2.imshow("test", frame)
-
+            
             k = cv2.waitKey(1)
             if k%256 == 32:
                 # SPACE pressed
@@ -274,7 +265,6 @@ if __name__ == "__main__":
             count += 1
             markerCenters.append(markerCoord)
 
-
         # Grab the pieces
         for markerTup in markerCenters:
             pixelX = int(markerTup[0])
@@ -303,7 +293,6 @@ if __name__ == "__main__":
             for start in startingPts:
                 if ((markerCenter[0] >= (start[0] - 0.01)) and (markerCenter[0] <= (start[0] + 0.01))) and ((markerCenter[1] >= (start[1] - 0.01)) and (markerCenter[1] <= (start[1] + 0.01))):
                     numAtStart += 1
-        #print(numAtStart)
 
         if dice_num % 2 == 1:
             if len(markerCenter_urx) - numAtStart == 0:
