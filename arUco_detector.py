@@ -9,7 +9,7 @@ image = cv2.imread("in-game_board.png")
 aruco_dict = cv2.aruco.Dictionary_get(cv2.aruco.DICT_4X4_50)
 parameters = cv2.aruco.DetectorParameters_create()
 
-# Detect the markers.
+# Detect the markers
 corners, ids, rejectedImgPoints = cv2.aruco.detectMarkers(image,aruco_dict,parameters=parameters)
 
 out = cv2.aruco.drawDetectedMarkers(image, corners, ids)
