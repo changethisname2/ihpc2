@@ -31,7 +31,7 @@ def place_piece(x, y):
     at_piece, rx, ry, rz = -0.2025, -2.1890, 2.1910, -0.0110
     rob.movel([x, y, above_piece, rxb, ryb, rzb], a, v)
     rob.movel([x, y, at_piece, rx, ry, rz],a,v)
-    gripper.open_gripper()
+    gripper.gripper_action(150)
     rob.movel([x, y, above_piece, rxb, ryb, rzb], a, v)
 
 def move_piece(markerCenter_urx, steps, dice_num):
