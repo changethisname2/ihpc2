@@ -37,7 +37,8 @@ def place_piece(x, y):
 
 def move_piece(markerCenter_urx, steps, dice_num):
     for step in steps:
-        if ((markerCenter_urx[0][0] >= (steps[step][0] - 0.01)) and (markerCenter_urx[0][0] <= (steps[step][0] + 0.01))) and ((markerCenter_urx[0][1] >= (steps[step][1] - 0.01)) and (markerCenter_urx[0][1] <= (steps[step][1] + 0.01))): 
+        if ((markerCenter_urx[0][0] >= (steps[step][0] - 0.01)) and (markerCenter_urx[0][0] <= (steps[step][0] + 0.01))) and 
+        ((markerCenter_urx[0][1] >= (steps[step][1] - 0.01)) and (markerCenter_urx[0][1] <= (steps[step][1] + 0.01))): 
             marker_pos = step
     diff = (57 - marker_pos)
     if diff < 6:
@@ -47,7 +48,8 @@ def move_piece(markerCenter_urx, steps, dice_num):
             place_piece(steps[key][0], steps[key][1])
         else:
             for step in steps:
-                if ((markerCenter_urx[0][0] >= (steps[step][0] - 0.01)) and (markerCenter_urx[0][0] <= (steps[step][0] + 0.01))) and ((markerCenter_urx[0][1] >= (steps[step][1] - 0.01)) and (markerCenter_urx[0][1] <= (steps[step][1] + 0.01))):
+                if ((markerCenter_urx[0][0] >= (steps[step][0] - 0.01)) and (markerCenter_urx[0][0] <= (steps[step][0] + 0.01))) and 
+                ((markerCenter_urx[0][1] >= (steps[step][1] - 0.01)) and (markerCenter_urx[0][1] <= (steps[step][1] + 0.01))):
                     next_step_num = step + dice_num
                     for nextStep in steps:
                         if next_step_num == nextStep:
@@ -55,7 +57,8 @@ def move_piece(markerCenter_urx, steps, dice_num):
                             place_piece(steps[nextStep][0], steps[nextStep][1])
     else:
         for step in steps:
-            if ((markerCenter_urx[0][0] >= (steps[step][0] - 0.01)) and (markerCenter_urx[0][0] <= (steps[step][0] + 0.01))) and ((markerCenter_urx[0][1] >= (steps[step][1] - 0.01)) and (markerCenter_urx[0][1] <= (steps[step][1] + 0.01))):
+            if ((markerCenter_urx[0][0] >= (steps[step][0] - 0.01)) and (markerCenter_urx[0][0] <= (steps[step][0] + 0.01))) and 
+            ((markerCenter_urx[0][1] >= (steps[step][1] - 0.01)) and (markerCenter_urx[0][1] <= (steps[step][1] + 0.01))):
                 next_step_num = step + dice_num
                 for nextStep in steps:
                     if next_step_num == nextStep:
