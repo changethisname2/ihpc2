@@ -15,8 +15,8 @@ a, v = 0.5, 0.3
 pos_dice_drop = [0.707, 0.219, 0.030, -2.205, 2.205, -0.043]
 pos_dice_grab = [0.719, 0.219, -0.200, -2.205, 2.205, -0.043]
 pos_dice_pic = [0.653, 0.187, -0.143, -2.189, 2.191, -0.011]
-pos_board = [0.647, -0.078, -0.029, -2.125, 2.190, -0.108]
-pos_boardj = [0.137, -1.985, -1.438, -1.176, 1.563, 0.166]
+pos_board = [0.707, -0.053, 0.035, -2.042, 2.027, -0.376]
+pos_boardj = [0.234, -1.847, -1.965, -0.558, 1.478, 0.208]
 
 def grab_piece(x, y):
     above_piece, rxb, ryb, rzb = -0.1502, -2.1890, 2.1920, -0.0111
@@ -105,8 +105,8 @@ if __name__ == "__main__":
         dice_params = cv2.SimpleBlobDetector_Params()
 
         # Change thresholds
-        dice_params.minThreshold = 50;
-        dice_params.maxThreshold = 15000;
+        dice_params.minThreshold = 50
+        dice_params.maxThreshold = 15000
 
         # Filter by Area.
         dice_params.filterByArea = True
@@ -169,6 +169,7 @@ if __name__ == "__main__":
         print(markerCentres)
         cv2.imshow("out",out)
         cv2.waitKey(0)"""
+	
         # Grab the pieces
         """for markerTup in markerCenters:
             pixelX = int(markerTup[0])
