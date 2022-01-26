@@ -14,12 +14,12 @@ a, v = 0.5, 0.3
 pos_dice_drop = [0.707, 0.219, 0.030, -2.205, 2.205, -0.043]
 pos_dice_grab = [0.719, 0.219, -0.200, -2.205, 2.205, -0.043]
 pos_dice_pic = [0.653, 0.187, -0.163, -2.189, 2.191, -0.011]
-pos_board = [0.647, -0.078, -0.029, -2.125, 2.190, -0.108]
-pos_boardj = [0.137, -1.985, -1.438, -1.176, 1.563, 0.166]
+pos_board = [0.707, -0.053, 0.035, -2.042, 2.027, -0.376]
+pos_boardj = [0.234, -1.847, -1.965, -0.558, 1.478, 0.208]
 
 def grab_piece(x, y):
     above_piece, rxb, ryb, rzb = -0.1502, -2.1890, 2.1920, -0.0111
-    at_piece, rx, ry, rz = -0.2025, -2.1890,2.1910,-0.0110
+    at_piece, rx, ry, rz = -0.2025, -2.1890, 2.1910, -0.0110
     rob.movel([x, y, above_piece, rxb, ryb, rzb],0.2,0.3)
     rob.movel([x, y, at_piece, rx, ry, rz],0.2,0.3)
     gripper.close_gripper()
@@ -27,10 +27,10 @@ def grab_piece(x, y):
 
 def place_piece(x, y):
     above_piece, rxb, ryb, rzb = -0.1502, -2.1890, 2.1920, -0.0111
-    at_piece, rx, ry, rz = -0.2025, -2.1890,2.1910,-0.0110
+    at_piece, rx, ry, rz = -0.2025, -2.1890, 2.1910, -0.0110
     rob.movel([x, y, above_piece, rxb, ryb, rzb],0.2,0.3)
     rob.movel([x, y, at_piece, rx, ry, rz],0.2,0.3)
-    gripper.open_gripper()
+    gripper.gripper_action(150)
     rob.movel([x, y, above_piece, rxb, ryb, rzb],0.2,0.3)
 
 if __name__ == "__main__":
@@ -59,8 +59,8 @@ if __name__ == "__main__":
         params = cv2.SimpleBlobDetector_Params()
 
         # Change thresholds
-        params.minThreshold = 50;
-        params.maxThreshold = 15000;
+        params.minThreshold = 50
+        params.maxThreshold = 15000
 
         # Filter by Area.
         params.filterByArea = True
@@ -91,7 +91,6 @@ if __name__ == "__main__":
 
         img_gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
 
-        
         # Detect blobs.
         keypoints = detector.detect(img_gray)
 
@@ -101,12 +100,12 @@ if __name__ == "__main__":
         for keypoint in keypoints:
             pixelX = int(keypoint.pt[0])
             pixelY = int(keypoint.pt[1])
-            mXcv = pixelX * 0.00062295
-            mYcv = pixelY * 0.00062295
+            mXcv = pixelX * 0.0007308
+            mYcv = pixelY * 0.0007308
             mXcv = float("{:.4f}".format(mXcv))
             mYcv = float("{:.4f}".format(mYcv))
-            mXurx = 0.8880 - mYcv
-            mYurx = 0.1575 - mXcv
+            mXurx = 0.8911 - mYcv
+            mYurx = 0.2214 - mXcv
             cordTup = (mXurx,mYurx)
             coordinate.append(cordTup)
         endPts = (0.73487,-0.06897)
@@ -122,72 +121,72 @@ if __name__ == "__main__":
         cv2.destroyAllWindows()
         
         steps = {
-            1 : coordinate [57],
-            2 : coordinate [7],
-            3 : coordinate [8],
-            4 : coordinate [27],
-            5 : coordinate [9],
-            6 : coordinate [2],
-            7 : coordinate [0],
-            8 : coordinate [23],
-            9 : coordinate [22],
-            10 : coordinate [40],
-            11 : coordinate [39],
-            12 : coordinate [19],
-            13 : coordinate [55],
-            14 : coordinate [41],
-            15 : coordinate [42],
-            16 : coordinate [43],
-            17 : coordinate [1],
-            18 : coordinate [3],
-            19 : coordinate [10],
-            20 : coordinate [26],
-            21 : coordinate [11],
-            22 : coordinate [4],
-            23 : coordinate [5],
-            24 : coordinate [56],
-            25 : coordinate [58],
-            26 : coordinate [49],
-            27 : coordinate [48],
-            28 : coordinate [35],
-            29 : coordinate [46],
-            30 : coordinate [45],
-            31 : coordinate [44],
-            32 : coordinate [59],
-            33 : coordinate [60],
-            34 : coordinate [53],
-            35 : coordinate [54],
-            36 : coordinate [37],
-            37 : coordinate [38],
-            38 : coordinate [18],
-            39 : coordinate [17],
-            40 : coordinate [16],
-            41 : coordinate [36],
-            42 : coordinate [52],
-            43 : coordinate [51],
-            44 : coordinate [50],
-            45 : coordinate [34],
-            46 : coordinate [33],
-            47 : coordinate [15],
-            48 : coordinate [14],
-            49 : coordinate [47],
-            50 : coordinate [32],
-            51 : coordinate [28],
-            52 : coordinate [29],
-            53 : coordinate [12],
-            54 : coordinate [13],
-            55 : coordinate [30],
-            56 : coordinate [31],
-            57 : endPts
+            1 : (0.715, -0.16),
+            2 : (0.716, -0.145),
+            3 : (0.715, -0.125),
+            4 : (0.715, -0.105),
+            5 : (0.715, -0.09),
+            6 : (0.695, -0.07),
+            7 : (0.677, -0.07),
+            8 : (0.661, -0.07),
+            9 : (0.641, -0.07),
+            10 : (0.623, -0.07),
+            11 : (0.604, -0.07),
+            12 : (0.604, -0.054),
+            13 : (0.604, -0.035),
+            14 : (0.623, -0.035),
+            15 : (0.641, -0.035),
+            16 : (0.6595, -0.034),
+            17 : (0.678, -0.034),
+            18 : (0.696, -0.034),
+            19 : (0.7148, -0.0145),
+            20 : (0.7148, 0.0050),
+            21 : (0.7148, 0.0239),
+            22 : (0.7148, 0.0415),
+            23 : (0.7148, 0.0595),
+            24 : (0.7148, 0.0786),
+            25 : (0.7329, 0.0786),
+            26 : (0.7524, 0.0786),
+            27 : (0.7524, 0.0604),
+            28 : (0.7524, 0.0420),
+            29 : (0.7524, 0.0229),
+            30 : (0.7524, 0.0045),
+            31 : (0.7529, -0.0144),
+            32 : (0.7718, -0.0305),
+            33 : (0.7902, -0.0305),
+            34 : (0.8083, -0.0305),
+            35 : (0.8271, -0.0305),
+            36 : (0.8464, -0.0305),
+            37 : (0.8660, -0.0305),
+            38 : (0.8660, -0.0472),
+            39 : (0.8660, -0.0669),
+            40 : (0.8479, -0.0674),
+            41 : (0.8266, -0.0659),
+            42 : (0.8090, -0.0687),
+            43 : (0.7902, -0.0687),
+            44 : (0.7718, -0.0690),
+            45 : (0.7539, -0.090),
+            46 : (0.7544, -0.105),
+            47 : (0.7549, -0.125),
+            48 : (0.7549, -0.1439),
+            49 : (0.7554, -0.1624),
+            50 : (0.7559, -0.1818),
+            51 : (0.7377, -0.1818),
+            52 : (0.7377, -0.1624),
+            53 : (0.7377, -0.1439),
+            54 : (0.7372, -0.125),
+            55 : (0.7367, -0.107),
+            56 : (0.7362, -0.0885),
+            57 : (0.7343, -0.06897)
         }
-    
-        print(steps)
+   
         startingPts = []
-        startingPts.append(coordinate[24])
-        startingPts.append(coordinate[25])
-        startingPts.append(coordinate[21])
-        startingPts.append(coordinate[20])
+        startingPts.append((0.67, -0.16))
+        startingPts.append((0.67, -0.12))
+        startingPts.append((0.63, -0.16))
+        startingPts.append((0.63, -0.12))
 
+        """
         rob.movel(pos_board, a, v)
         for step in steps:
             next_step_num_e = 8
@@ -196,6 +195,7 @@ if __name__ == "__main__":
                     gripper.open_gripper()
                     #grab_piece(startingPts[0][0],startingPts[0][1])
                     place_piece(steps[26][0],steps[26][1])
+        """
     except:
         traceback.print_exc()
     finally:
