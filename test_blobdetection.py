@@ -29,8 +29,8 @@ cv2.destroyAllWindows() '''
 params = cv2.SimpleBlobDetector_Params()
 
 # Change thresholds
-params.minThreshold = 50;
-params.maxThreshold = 15000;
+params.minThreshold = 50
+params.maxThreshold = 15000
 
 # Filter by Area.
 params.filterByArea = True
@@ -62,22 +62,20 @@ else :
 # img_gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
 
 
-
 # Detect blobs.
 keypoints = detector.detect(image)
-"""
 cordinate = []
 
 number = 0
 for keypoint in keypoints:
     pixelX = int(keypoint.pt[0])
     pixelY = int(keypoint.pt[1])
-    mXcv = pixelX * 0.00062295
-    mYcv = pixelY * 0.00062295
+    mXcv = pixelX * 0.0007308
+    mYcv = pixelY * 0.0007308
     mXcv = float("{:.4f}".format(mXcv))
     mYcv = float("{:.4f}".format(mYcv))
-    mXurx = 0.8950 - mYcv
-    mYurx = 0.1575 - mXcv
+    mXurx = 0.8911 - mYcv
+    mYurx = 0.2214 - mXcv
     cordTup = (pixelX, pixelY)
     cordinate.append(cordTup)
     number += 1
@@ -95,7 +93,6 @@ cv2.circle(imageCircle, circle_center3, radius, (255, 0, 0), 3, cv2.LINE_AA) # b
 cv2.circle(imageCircle, circle_center4, radius, (0, 255, 0), 3, cv2.LINE_AA) # green'''
 cv2.imshow("image Circle", imageCircle)
 cv2.waitKey(0)
-"""
 
 # Draw detected blobs as red circles.
 # cv2.DRAW_MATCHES_FLAGS_DRAW_RICH_KEYPOINTS ensures the size of the circle corresponds to the size of blob
