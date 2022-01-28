@@ -101,14 +101,14 @@ if __name__ == "__main__":
                 break
 
         """Detecting the dice"""
-        # Setup SimpleBlobDetector parameters.
+        # Setup SimpleBlobDetector parameters
         dice_params = cv2.SimpleBlobDetector_Params()
 
         # Change thresholds
         dice_params.minThreshold = 50
         dice_params.maxThreshold = 15000
 
-        # Filter by Area.
+        # Filter by Area
         dice_params.filterByArea = True
         dice_params.minArea = 50
         dice_params.maxArea = 400
@@ -136,12 +136,12 @@ if __name__ == "__main__":
 
         image = cv2.imread("dice_number.png")
         img_gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY) 
+	
 
-
-        # Detect blobs.
+        # Detect blobs
         keypoints = detector.detect(img_gray)
 
-        # Draw detected blobs as red circles.
+        # Draw detected blobs as red circles
         # cv2.DRAW_MATCHES_FLAGS_DRAW_RICH_KEYPOINTS ensures the size of the circle corresponds to the size of blob
         im_with_keypoints = cv2.drawKeypoints(img_gray, keypoints, np.array([]), (0,0,255), cv2.DRAW_MATCHES_FLAGS_DRAW_RICH_KEYPOINTS)
 
