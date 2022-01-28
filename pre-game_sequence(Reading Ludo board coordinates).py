@@ -55,14 +55,14 @@ if __name__ == "__main__":
 
         image = cv2.imread("pre-game board.png")
 
-        # Setup SimpleBlobDetector parameters.()
+        # Setup SimpleBlobDetector parameters
         params = cv2.SimpleBlobDetector_Params()
 
         # Change thresholds
         params.minThreshold = 50
         params.maxThreshold = 15000
 
-        # Filter by Area.
+        # Filter by Area
         params.filterByArea = True
         params.minArea = 30
         params.maxArea = 800
@@ -91,7 +91,7 @@ if __name__ == "__main__":
 
         img_gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
 
-        # Detect blobs.
+        # Detect blobs
         keypoints = detector.detect(img_gray)
 
         coordinate = []
@@ -110,7 +110,7 @@ if __name__ == "__main__":
             coordinate.append(cordTup)
         endPts = (0.73487,-0.06897)
 
-        # Draw detected blobs as red circles.
+        # Draw detected blobs as red circles
         # cv2.DRAW_MATCHES_FLAGS_DRAW_RICH_KEYPOINTS ensures the size of the circle corresponds to the size of blob
         im_with_keypoints = cv2.drawKeypoints(img_gray, keypoints, np.array([]), (0,0,255), cv2.DRAW_MATCHES_FLAGS_DRAW_RICH_KEYPOINTS)
 
