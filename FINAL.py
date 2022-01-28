@@ -176,7 +176,7 @@ if __name__ == "__main__":
         cv2.destroyAllWindows()
 
         """Detecting the dice"""
-        # Setup SimpleBlobDetector parameters.
+        # Setup SimpleBlobDetector parameters
         dice_params = cv2.SimpleBlobDetector_Params()
 
         # Change thresholds
