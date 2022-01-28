@@ -12,7 +12,7 @@ image = cv2.imread("pre-game board.png")
 ''' aruco_dict = cv2.aruco.Dictionary_get(cv2.aruco.DICT_4X4_50)
 parameters = cv2.aruco.DetectorParameters_create()
 
-# Detect the markers.
+# Detect the markers
 corners, ids, rejectedImgPoints = cv2.aruco.detectMarkers(resized_down,aruco_dict,parameters=parameters)
 
 out = cv2.aruco.drawDetectedMarkers(resized_down, corners, ids)
@@ -25,14 +25,14 @@ cv2.destroyAllWindows() '''
 
 """Detecting the chess board"""
 
-# Setup SimpleBlobDetector parameters.
+# Setup SimpleBlobDetector parameters
 params = cv2.SimpleBlobDetector_Params()
 
 # Change thresholds
 params.minThreshold = 50
 params.maxThreshold = 15000
 
-# Filter by Area.
+# Filter by Area
 params.filterByArea = True
 params.minArea = 30
 params.maxArea = 800 
@@ -62,7 +62,7 @@ else :
 # img_gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
 
 
-# Detect blobs.
+# Detect blobs
 keypoints = detector.detect(image)
 cordinate = []
 
@@ -94,7 +94,7 @@ cv2.circle(imageCircle, circle_center4, radius, (0, 255, 0), 3, cv2.LINE_AA) # g
 cv2.imshow("image Circle", imageCircle)
 cv2.waitKey(0)
 
-# Draw detected blobs as red circles.
+# Draw detected blobs as red circles
 # cv2.DRAW_MATCHES_FLAGS_DRAW_RICH_KEYPOINTS ensures the size of the circle corresponds to the size of blob
 im_with_keypoints = cv2.drawKeypoints(image, keypoints, np.array([]), (0,0,255), cv2.DRAW_MATCHES_FLAGS_DRAW_RICH_KEYPOINTS)
 
